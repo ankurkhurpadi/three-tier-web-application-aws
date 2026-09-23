@@ -7,7 +7,7 @@ This project demonstrates the deployment of a three-tier web application on AWS 
 The application layer runs on EC2 instances in private subnets, while the database layer uses Amazon RDS MySQL in private subnets. An internet-facing Application Load Balancer distributes incoming traffic across healthy EC2 instances.
 
 ## Architecture
-![AWS Three-Tier Architecture](architecture/three-tier-architecture.png)
+
 
 ```text
                          Internet
