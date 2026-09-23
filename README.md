@@ -28,93 +28,115 @@ The application layer runs on EC2 instances in private subnets, while the databa
                       MySQL Database
                       Private Subnet
 ```
-AWS Services Used
-Amazon VPC
-Amazon EC2
-Application Load Balancer
-Auto Scaling Group
-Amazon RDS MySQL
-Amazon CloudWatch
-AWS IAM
-NAT Gateway
-Internet Gateway
-Security Groups
-EC2 Instance Connect Endpoint
-Network Architecture
-VPC
+
+## AWS Services Used
+
+- Amazon VPC
+- Amazon EC2
+- Application Load Balancer
+- Auto Scaling Group
+- Amazon RDS MySQL
+- Amazon CloudWatch
+- AWS IAM
+- NAT Gateway
+- Internet Gateway
+- Security Groups
+- EC2 Instance Connect Endpoint
+
+## Network Architecture
+
+### VPC
 
 CIDR:
 
-10.0.0.0/16
+`10.0.0.0/16`
 
-Public Subnets
-10.0.1.0/24 - Availability Zone 1
-10.0.2.0/24 - Availability Zone 2
-Private Application Subnets
-10.0.11.0/24 - Availability Zone 1
-10.0.12.0/24 - Availability Zone 2
-Private Database Subnets
-10.0.21.0/24 - Availability Zone 1
-10.0.22.0/24 - Availability Zone 2
-Application Flow
-User sends an HTTP request to the Application Load Balancer.
-The ALB forwards the request to a healthy EC2 instance.
-Nginx and PHP-FPM process the application request.
-The PHP application connects to Amazon RDS MySQL.
-Registration data is stored in the RDS database.
-Auto Scaling maintains the required EC2 capacity.
-Amazon CloudWatch provides monitoring metrics.
-Application
+### Public Subnets
+
+- `10.0.1.0/24` - Availability Zone 1
+- `10.0.2.0/24` - Availability Zone 2
+
+### Private Application Subnets
+
+- `10.0.11.0/24` - Availability Zone 1
+- `10.0.12.0/24` - Availability Zone 2
+
+### Private Database Subnets
+
+- `10.0.21.0/24` - Availability Zone 1
+- `10.0.22.0/24` - Availability Zone 2
+
+## Application Flow
+
+1. User sends an HTTP request to the Application Load Balancer.
+2. The ALB forwards the request to a healthy EC2 instance.
+3. Nginx and PHP-FPM process the application request.
+4. The PHP application connects to Amazon RDS MySQL.
+5. Registration data is stored in the RDS database.
+6. Auto Scaling maintains the required EC2 capacity.
+7. Amazon CloudWatch provides monitoring metrics.
+
+## Application
 
 The application is a simple PHP-based student registration system.
 
 Users can enter:
 
-Name
-Email
+- Name
+- Email
 
 The submitted data is stored in a MySQL database hosted on Amazon RDS.
 
-Security
-RDS is configured without public access.
-RDS port 3306 accepts traffic only from the EC2 security group.
-EC2 HTTP traffic is allowed from the ALB security group.
-SSH access is restricted to the administrator's IP.
-Application instances are deployed in private subnets.
-NAT Gateway provides outbound internet access for private application instances.
-IAM is used for Systems Manager access.
-Auto Scaling
+## Security
+
+- RDS is configured without public access.
+- RDS port `3306` accepts traffic only from the EC2 security group.
+- EC2 HTTP traffic is allowed from the ALB security group.
+- SSH access is restricted to the administrator's IP.
+- Application instances are deployed in private subnets.
+- NAT Gateway provides outbound internet access for private application instances.
+- IAM is used for Systems Manager access.
+
+## Auto Scaling
 
 The Auto Scaling Group is configured with:
 
-Minimum instances: 2
-Desired instances: 2
-Maximum instances: 4
-Target tracking CPU utilization: 50%
+- Minimum instances: 2
+- Desired instances: 2
+- Maximum instances: 4
+- Target tracking CPU utilization: 50%
 
 This allows the application layer to automatically adjust capacity based on CPU utilization.
 
-Load Balancing
+## Load Balancing
 
 An internet-facing Application Load Balancer distributes incoming HTTP requests across healthy EC2 instances.
 
 Health checks are configured to verify application availability.
 
-Monitoring
+## Monitoring
 
 Amazon CloudWatch is used to monitor:
 
-EC2 CPU utilization
-ALB request metrics
-ALB target health
-RDS CPU utilization
-RDS database connections
-RDS storage and memory metrics
-Technologies
-AWS
-Linux
-Nginx
-PHP
-MySQL
-Amazon RDS
-Amazon CloudWatch
+- EC2 CPU utilization
+- ALB request metrics
+- ALB target health
+- RDS CPU utilization
+- RDS database connections
+- RDS storage and memory metrics
+
+## Technologies
+
+- AWS
+- Linux
+- Nginx
+- PHP
+- MySQL
+- Amazon RDS
+- Amazon CloudWatch
+
+## Security Note
+
+Database credentials are not stored in this repository.
+
+`db.php.example` is provided as a template. The actual `db.php` file containing database credentials should remain on the server and should never be committed to GitHub.
