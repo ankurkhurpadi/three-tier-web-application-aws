@@ -27,6 +27,7 @@ The application layer runs on EC2 instances in private subnets, while the databa
                        Amazon RDS
                       MySQL Database
                       Private Subnet
+```
 AWS Services Used
 Amazon VPC
 Amazon EC2
