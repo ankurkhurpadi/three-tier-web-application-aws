@@ -140,3 +140,5 @@ Amazon CloudWatch is used to monitor:
 Database credentials are not stored in this repository.
 
 `db.php.example` is provided as a template. The actual `db.php` file containing database credentials should remain on the server and should never be committed to GitHub.
+
+`db.php.example` is provided as a template. The actual `db.php` file containing database credentials should remain on the server and should never be committed to GitHub.
